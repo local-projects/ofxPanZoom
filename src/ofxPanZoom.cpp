@@ -93,7 +93,9 @@ bool ofxPanZoom::fingerDown(){
 
 void ofxPanZoom::update(float deltaTime){
 	float time = 1; deltaTime / 60.0f;
+    float oldzoom = zoom;
 	zoom = (time * smoothFactor) * desiredZoom + (1.0f - smoothFactor * time) * zoom;
+    if(oldzoom != zoom) ofNotifyEvent(zoomChangedEvent, zoom, this);
 	offset = (time * smoothFactor) * desiredOffset + (1.0f - smoothFactor * time) * offset;
 	applyConstrains();
 }

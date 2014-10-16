@@ -36,6 +36,7 @@ public:
 	void setMinZoom(float min){ minZoom = min;} //how far out user can zoom
 	void setMaxZoom(float max){ maxZoom = max;}	//how far in user can zoom
 	void setZoom(float z){ zoom = desiredZoom = z;}  //set a zoom level
+    float getZoomPercentage(){ return ofNormalize(zoom, minZoom, maxZoom); }
     void setZoomPercentage(float zp){ setZoom(ofLerp(minZoom, maxZoom, zp)); }
 	void setSmoothFactor(float smooth){ smoothFactor = smooth;}; // [0..1], 1 means no fitlering at all, 0.1 very smoothed zoom
 	//void setVerticalFlip( bool flip){ vFlip = flip; } 
@@ -63,6 +64,7 @@ public:
 	ofVec2f screenToWorld(const ofVec2f & p); //convert a point from current screen units to world units
 	ofVec2f worldToScreen(const ofVec2f & p); //convert a point from world units to current screen units
 
+    ofEvent<float> zoomChangedEvent;
 private:
 	int idToIndex(int id);
 
