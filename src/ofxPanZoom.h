@@ -20,6 +20,7 @@ class ofxPanZoom{
 
 public:
 	#define INDEX_NOT_FOUND (-1)
+    #define NO_ZOOM_DIFF (-1)
 	ofxPanZoom();
 	~ofxPanZoom(){};
 		
@@ -33,7 +34,9 @@ public:
 
 	void setDeviceScaleFactor(float f); //retina
 
+    float getMinZoom(){ return minZoom; }
 	void setMinZoom(float min){ minZoom = min;} //how far out user can zoom
+    float getMaxZoom(){ return maxZoom; }
 	void setMaxZoom(float max){ maxZoom = max;}	//how far in user can zoom
 	void setZoom(float z){ zoom = desiredZoom = z;}  //set a zoom level
     float getZoomPercentage(){ return ofNormalize(zoom, minZoom, maxZoom); }

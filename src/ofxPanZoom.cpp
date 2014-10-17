@@ -16,7 +16,7 @@ ofxPanZoom::ofxPanZoom(){
 	
 	minZoom = 0.1f;
 	maxZoom = 10.0f;	
-	zoomDiff = -1.0f;
+	zoomDiff = NO_ZOOM_DIFF;
 	offset.x = offset.y = desiredOffset.x = desiredOffset.y = 0.0f;
 
 	//vFlip = true;
@@ -207,12 +207,16 @@ void ofxPanZoom::touchMoved(ofTouchEventArgs &touch){
 
 			// use first two touches, ignore the rest
 			d = lastTouch[ 0 ].distance( lastTouch[ 1 ] );
-			//cout << d << endl;
+
 			if (d > MIN_FINGER_DISTANCE ){
 				// printf(" zoomDiff: %f  d:%f  > zoom: %f\n", zoomDiff, d, zoom);
-				if ( zoomDiff > 0 ){
+				if ( zoomDiff != NO_ZOOM_DIFF ){
+                    
+                    //  Update desiredZoom
 					desiredZoom *= ( d / zoomDiff ) ;
 					desiredZoom = ofClamp( desiredZoom, minZoom, maxZoom );
+                    
+                    // Update desiredOffset
 					float tx = ( lastTouch[0].x + lastTouch[1].x ) * 0.5f ;
 					float ty = ( lastTouch[0].y + lastTouch[1].y ) * 0.5f ;
 					tx -= area.x * 0.5;
@@ -254,7 +258,7 @@ void ofxPanZoom::touchUp(ofTouchEventArgs &touch){
 	lastTouch[idx].set(touch);
 
 	if ( touchIDOrder.size() >= 1) {
-		zoomDiff = -1.0f;
+		zoomDiff = NO_ZOOM_DIFF;
 	}
 
 	touchIDOrder.erase(touchIDOrder.begin()+idx);
