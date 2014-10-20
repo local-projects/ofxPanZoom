@@ -52,6 +52,14 @@ bool ofxPanZoom::isOnScreen( const ofRectangle & r, float gap ){	///gets point i
 	return r.intersects( r2 );
 }
 
+void ofxPanZoom::begin(int customW, int customH){
+    ofPushMatrix();
+    apply(customW, customH);
+}
+
+void ofxPanZoom::end(){
+    ofPopMatrix();
+}
 
 void ofxPanZoom::apply(int customW, int customH){
 
@@ -117,12 +125,9 @@ ofVec2f ofxPanZoom::worldToScreen( const ofVec2f & p ){
 	return r;
 }
 
-
-
-ofRectangle ofxPanZoom::getCurentViewPort(){
+ofRectangle ofxPanZoom::getCurrentViewPort(){
 	return ofRectangle(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 }
-
 
 bool ofxPanZoom::viewportDidChange(){
 	ofRectangle r = getCurentViewPort();

@@ -55,9 +55,15 @@ public:
 	bool isOnScreen(const ofVec2f & p, float gap = 0.0f); //query if a point (in world units) is now visible on screen
 	bool isOnScreen(const ofRectangle & r, float gap = 0.0f); //query if an ofRectangle (in world units) is now visible on screen
 	void lookAt(ofVec2f p);	//set the offset to place the given point (in world units) in the middle of the screen
-	ofRectangle getCurentViewPort();
+	ofRectangle getCurrentViewPort();
+    // typo; only for backward compatibility
+    ofRectangle getCurentViewPort(){ return getCurrentViewPort(); }
+    
 
-	void update(float deltaTime);
+    void update(float deltaTime);
+
+    void begin(int customW = 0, int customH = 0);
+    void end();
 
 	void apply(int customW = 0, int customH = 0);	//customWH >> if you need to provide a viewport size (not full screen)
 	void reset(); //go back to default OF screen projection
