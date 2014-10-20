@@ -62,9 +62,6 @@ public:
 
     void update(float deltaTime);
 
-    void begin(int customW = 0, int customH = 0);
-    void end();
-
 	void apply(int customW = 0, int customH = 0);	//customWH >> if you need to provide a viewport size (not full screen)
 	void reset(); //go back to default OF screen projection
 	void drawDebug(); //overlay camera and touches status on screen

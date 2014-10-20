@@ -52,22 +52,15 @@ bool ofxPanZoom::isOnScreen( const ofRectangle & r, float gap ){	///gets point i
 	return r.intersects( r2 );
 }
 
-void ofxPanZoom::begin(int customW, int customH){
-    ofPushMatrix();
-    apply(customW, customH);
-}
-
-void ofxPanZoom::end(){
-    ofPopMatrix();
-}
-
 void ofxPanZoom::apply(int customW, int customH){
-
+    
 	int ww = customW == 0 ? area.x : customW;
 	int hh = customH == 0 ? area.y : customH;
 	
 	float w = ww * 0.5f / zoom;
 	float h = hh * 0.5f / zoom;
+
+    ofPushMatrix();
 
 	//ofSetOrientation(ofGetOrientation(), true);
 	ofSetupScreenOrtho( ww, hh, -10.0f, 10.0f);
@@ -86,7 +79,7 @@ void ofxPanZoom::apply(int customW, int customH){
 
 
 void ofxPanZoom::reset(){
-	ofSetupScreen();
+    ofPopMatrix();
 }
 
 void ofxPanZoom::lookAt( ofVec2f p ){
