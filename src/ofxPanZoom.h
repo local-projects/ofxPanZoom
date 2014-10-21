@@ -70,7 +70,12 @@ public:
 	ofVec2f screenToWorld(const ofVec2f & p); //convert a point from current screen units to world units
 	ofVec2f worldToScreen(const ofVec2f & p); //convert a point from world units to current screen units
 
+public:
+
     ofEvent<float> zoomChangedEvent;
+    ofEvent<ofVec2f> offsetChangedEvent;
+    ofEvent<ofRectangle> viewportChangedEvent;
+
 private:
 	int idToIndex(int id);
 
@@ -96,13 +101,14 @@ private:
 	float zoomDiff;
 	
 	ofVec2f lastTouch[MAX_TOUCHES];
-	
+
 	bool vFlip;	//of give you standard OF flipped y
 	bool viewportConstrained;
 	ofVec2f topLeftConstrain, bottomRightConstrain;
 
 	vector<int> touchIDOrder;
 
+    // previous viewport?
 	ofRectangle pViewport;
 
 	bool bTranslate;

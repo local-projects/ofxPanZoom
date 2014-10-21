@@ -94,11 +94,28 @@ bool ofxPanZoom::fingerDown(){
 
 void ofxPanZoom::update(float deltaTime){
 	float time = 1; deltaTime / 60.0f;
+
+    // remember previous state
     float oldzoom = zoom;
+    ofVec2f oldoffset = offset;
+    
 	zoom = (time * smoothFactor) * desiredZoom + (1.0f - smoothFactor * time) * zoom;
-    if(oldzoom != zoom) ofNotifyEvent(zoomChangedEvent, zoom, this);
 	offset = (time * smoothFactor) * desiredOffset + (1.0f - smoothFactor * time) * offset;
-	applyConstrains();
+    applyConstrains();
+
+    // fire the relevant change events
+    if(oldzoom != zoom){
+        ofNotifyEvent(zoomChangedEvent, zoom, this);
+    }
+
+    if(oldoffset != offset){
+        ofNotifyEvent(offsetChangedEvent, offset, this);
+    }
+
+    if(viewportDidChange()){
+        ofRectangle viewport = getCurrentViewPort();
+        ofNotifyEvent(viewportChangedEvent, viewport, this);
+    }
 }
 
 
@@ -119,9 +136,12 @@ ofVec2f ofxPanZoom::worldToScreen( const ofVec2f & p ){
 }
 
 ofRectangle ofxPanZoom::getCurrentViewPort(){
-	return ofRectangle(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+	// return ofRectangle(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+    // ofRectangle has a very convenient constructor for us
+    return ofRectangle(topLeft, bottomRight);
 }
 
+// returns if viewport changed and updates pViewport
 bool ofxPanZoom::viewportDidChange(){
 	ofRectangle r = getCurentViewPort();
 	bool ret;
