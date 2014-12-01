@@ -31,6 +31,8 @@ public:
 
 	void setViewportConstrain(ofVec2f topLeftConstrain_, ofVec2f bottomRightConstrain_ );
 	void removeViewportConstrain();
+    ofVec2f getViewportTopLeftConstrain(){ return topLeftConstrain; }
+    ofVec2f getViewportBottomRightConstrain(){ return bottomRightConstrain; }
 
 	void setDeviceScaleFactor(float f); //retina
 
